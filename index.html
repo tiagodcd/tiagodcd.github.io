@@ -94,6 +94,15 @@ h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.125rem; letter-sp
 .completo ul { margin: 0.75rem 0 1rem; padding-left: 1.2rem; color: var(--ink-soft); }
 .completo li::marker { color: var(--amarillo); }
 
+/* Skills gratis */
+.intro { color: var(--ink-soft); margin: -0.25rem 0 1rem; }
+.sello { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--paper); background: var(--naranja); padding: 0.1rem 0.55rem; border-radius: 99px; margin-bottom: 0.4rem; }
+.sello.ext { background: var(--cian); }
+.instalar { margin-top: 0.75rem; }
+.instalar h3 { font-weight: 800; font-size: 1.1rem; }
+.instalar ol { margin-top: 0.5rem; padding-left: 1.25rem; color: var(--ink-soft); display: grid; gap: 0.3rem; }
+.instalar code { font-family: ui-monospace, Consolas, monospace; color: var(--cian); font-size: 0.9em; }
+
 /* Prompt por seguirme */
 .prompt-card { border-color: oklch(55% 0.2 340 / 0.6); }
 .chip { display: inline-block; font-size: 0.8rem; font-weight: 600; color: oklch(80% 0.12 350); background: oklch(40% 0.15 350 / 0.35); border: 1px solid oklch(60% 0.18 350 / 0.5); padding: 0.2rem 0.65rem; border-radius: 99px; }
@@ -165,10 +174,31 @@ footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
       <div><h3>Flujo básico de vídeos con IA</h3><p>Los 6 pasos que sigo, de la idea al vídeo publicado. Un PDF de una página.</p></div>
       <a class="btn prim" href="flujo-reels-basico.pdf" download>Descargar PDF</a>
     </div>
+  </div>
+
+  <h2>SKILLS GRATIS</h2>
+  <p class="intro">Instrucciones que le enseñan a Claude Code a hacer una tarea paso a paso. Descárgalas y úsalas en tus vídeos.</p>
+  <div class="lista">
     <div class="card item">
-      <div><h3>Skills básicas de vídeo</h3><p>Instrucciones listas para que la IA te ayude a escribir el guion y montar el vídeo.</p></div>
-      <span class="btn off" role="note">Muy pronto</span>
+      <div><span class="sello">Mía</span><h3>Guion básico</h3><p>Te escribe el guion de un vídeo de 30 a 60 s: tres ganchos, el texto de la voz y una tabla con lo que se ve en cada escena.</p></div>
+      <a class="btn prim" href="skills/guion-basico.zip" download>Descargar skill</a>
     </div>
+    <div class="card item">
+      <div><span class="sello">Mía</span><h3>Ganchos</h3><p>Diez ganchos para los 2 primeros segundos, cada uno con texto en pantalla y frase hablada, y te elige los tres mejores.</p></div>
+      <a class="btn prim" href="skills/ganchos.zip" download>Descargar skill</a>
+    </div>
+    <div class="card item">
+      <div><span class="sello ext">Oficial de Remotion</span><h3>Remotion</h3><p>Las skills oficiales para animar vídeos con código. Es la herramienta con la que monto mis reels.</p></div>
+      <a class="btn sec" href="https://github.com/remotion-dev/skills" target="_blank" rel="noopener">Ver en GitHub</a>
+    </div>
+  </div>
+  <div class="card instalar">
+    <h3>Cómo instalar una skill</h3>
+    <ol>
+      <li>Descarga el .zip y descomprímelo.</li>
+      <li>Mueve la carpeta a <code>.claude/skills</code>, dentro de tu carpeta de usuario.</li>
+      <li>Abre Claude Code y pídele, por ejemplo: «escríbeme el guion de un reel sobre…».</li>
+    </ol>
   </div>
 
   <h2>REGALO POR SEGUIRME</h2>
