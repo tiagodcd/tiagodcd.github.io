@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiago Decoded · Contenido con IA</title>
+<meta name="description" content="Crea vídeos con IA sin grabarte. Descarga gratis el flujo básico.">
+<meta property="og:title" content="Tiago Decoded · Contenido con IA">
+<meta property="og:description" content="Descarga gratis el flujo básico para crear vídeos con IA.">
+<meta property="og:image" content="assets/avatar-perfil.png">
+<link rel="icon" href="assets/avatar-perfil.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+/* Link-in-bio de Tiago Decoded. Interfaz plana y moderna. */
+:root {
+  --paper: oklch(17% 0.02 270);
+  --paper-2: oklch(23% 0.03 268);
+  --card: oklch(13% 0.02 270);
+  --ink: oklch(96% 0.01 85);
+  --ink-soft: oklch(70% 0.03 270);
+  --rule: oklch(30% 0.03 268);
+  --naranja: oklch(73% 0.17 45);
+  --amarillo: oklch(88% 0.17 95);
+  --cian: oklch(89% 0.13 200);
+  --rojo: oklch(66% 0.22 20);
+  --pixel: "Silkscreen", ui-monospace, monospace;
+  --body: "Outfit", system-ui, sans-serif;
+  --r: 16px;
+}
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--paper); }
+body {
+  background:
+    radial-gradient(60% 40% at 0% 0%, oklch(45% 0.16 300 / 0.45), transparent 70%),
+    radial-gradient(55% 35% at 100% 8%, oklch(60% 0.17 45 / 0.35), transparent 70%),
+    radial-gradient(70% 40% at 50% 55%, oklch(55% 0.12 200 / 0.18), transparent 70%),
+    radial-gradient(60% 40% at 100% 100%, oklch(45% 0.16 300 / 0.35), transparent 70%),
+    var(--paper);
+  color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.55;
+  min-height: 100vh; overflow-x: clip;
+}
+main { max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+img.px { image-rendering: pixelated; display: block; }
+a { color: inherit; }
+
+/* Cabecera */
+.top { display: flex; align-items: center; gap: 0.75rem; }
+.top img { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--rule); }
+.top b { display: block; font-weight: 800; }
+.top span { color: var(--ink-soft); font-size: 0.875rem; }
+
+/* Portada */
+.hero { margin-top: 2rem; text-align: center; }
+.tag { font-family: var(--pixel); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--naranja); }
+h1 { font-weight: 900; font-size: clamp(2.1rem, 8vw, 3rem); line-height: 1.05; margin-top: 0.5rem; letter-spacing: -0.01em; }
+h1 em { font-style: normal; color: var(--naranja); }
+.hero p { color: var(--ink-soft); margin: 0.75rem auto 0; max-width: 34ch; }
+.escena { display: flex; align-items: flex-end; justify-content: center; gap: 0.75rem; margin-top: 1.75rem; }
+.bocadillo { font-family: var(--pixel); font-size: 0.7rem; background: var(--ink); color: var(--paper); padding: 0.35rem 0.6rem; border-radius: 6px; margin-bottom: 0.4rem; white-space: nowrap; }
+
+/* Botones */
+.btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 56px; padding: 0.9rem 1.25rem; border-radius: 12px; font-weight: 800; font-size: 1.0625rem; text-decoration: none; text-align: center; transition: transform 0.15s ease, filter 0.15s ease; }
+.btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.btn:focus-visible { outline: 3px solid var(--cian); outline-offset: 3px; }
+.btn.prim { background: var(--amarillo); color: var(--paper); }
+.btn.sec { background: var(--card); border: 2px solid var(--rule); color: var(--ink); }
+.btn.off { background: transparent; border: 2px dashed var(--rule); color: var(--ink-soft); cursor: default; }
+.btn.off:hover { transform: none; filter: none; }
+.botones { display: grid; gap: 0.75rem; margin-top: 1.75rem; }
+
+/* Secciones */
+h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.125rem; letter-spacing: 0.06em; margin: 3rem 0 1rem; }
+.card { background: var(--card); border: 2px solid var(--rule); border-radius: var(--r); padding: 1.25rem; }
+
+.quien { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: center; }
+.quien img { border-radius: 50%; border: 2px solid var(--rule); }
+.quien p { color: var(--ink-soft); }
+.quien b { color: var(--ink); }
+.lista { display: grid; gap: 0.75rem; }
+.item { display: grid; gap: 0.9rem; }
+.item h3 { font-weight: 800; font-size: 1.15rem; line-height: 1.25; }
+.item p { color: var(--ink-soft); font-size: 0.95rem; margin-top: 0.25rem; }
+
+.pasos { display: grid; gap: 0.6rem; counter-reset: paso; padding: 0; list-style: none; }
+.pasos li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 0.5rem; align-items: baseline; background: var(--card); border: 2px solid var(--rule); border-radius: 12px; padding: 0.85rem 1rem; }
+.pasos li::before { counter-increment: paso; content: counter(paso); font-family: var(--pixel); font-size: 1.5rem; color: var(--c); }
+.pasos b { font-weight: 800; }
+.pasos span { color: var(--ink-soft); }
+
+.completo { border: 2px dashed var(--amarillo); }
+.completo h3 { font-weight: 800; font-size: 1.25rem; color: var(--amarillo); }
+.completo ul { margin: 0.75rem 0 1rem; padding-left: 1.2rem; color: var(--ink-soft); }
+.completo li::marker { color: var(--amarillo); }
+
+/* Prompt por seguirme */
+.prompt-card { border-color: oklch(55% 0.2 340 / 0.6); }
+.chip { display: inline-block; font-size: 0.8rem; font-weight: 600; color: oklch(80% 0.12 350); background: oklch(40% 0.15 350 / 0.35); border: 1px solid oklch(60% 0.18 350 / 0.5); padding: 0.2rem 0.65rem; border-radius: 99px; }
+.prompt-card h3 { font-weight: 900; font-size: 1.6rem; line-height: 1.1; margin-top: 0.75rem; }
+.prompt-card > p { color: var(--ink-soft); margin-top: 0.5rem; }
+.uso { list-style: none; padding: 0; margin: 1rem 0; display: grid; gap: 0.5rem; counter-reset: uso; }
+.uso li { display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0.6rem; align-items: start; font-size: 0.95rem; }
+.uso li::before { counter-increment: uso; content: counter(uso); width: 1.6rem; height: 1.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--naranja); color: var(--paper); font-weight: 800; font-size: 0.85rem; }
+.caja { position: relative; border: 2px solid var(--rule); border-radius: 12px; overflow: hidden; background: oklch(10% 0.02 270); }
+.caja pre { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 0.8rem; line-height: 1.5; padding: 1rem; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 340px; overflow: auto; color: var(--ink); }
+.caja.bloq pre { filter: blur(5px); user-select: none; overflow: hidden; }
+.candado { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 0.6rem; padding: 1rem; text-align: center; background: oklch(10% 0.02 270 / 0.55); }
+.caja:not(.bloq) .candado { display: none; }
+.candado b { font-size: 1.2rem; font-weight: 800; }
+.candado span { color: var(--ink-soft); font-size: 0.9rem; max-width: 30ch; }
+.btn.ig { background: linear-gradient(90deg, #7a2fb0, #b52f7c, #c8235f); color: #fff; border: 0; cursor: pointer; font-family: inherit; }
+.copiar { margin-top: 0.75rem; width: 100%; cursor: pointer; font-family: inherit; }
+.caja.bloq ~ .copiar { display: none; }
+.nota { color: var(--ink-soft); font-size: 0.8rem; margin-top: 0.75rem; }
+
+/* Preguntas frecuentes */
+.faq { display: grid; gap: 0.6rem; }
+.faq details { background: var(--card); border: 2px solid var(--rule); border-radius: 12px; padding: 0 1rem; }
+.faq summary { cursor: pointer; font-weight: 800; padding: 0.95rem 0; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--naranja); font-weight: 900; }
+.faq details[open] summary::after { content: "\2212"; }
+.faq summary:focus-visible { outline: 3px solid var(--cian); outline-offset: 2px; border-radius: 6px; }
+.faq details p { color: var(--ink-soft); padding-bottom: 1rem; }
+
+footer { max-width: 600px; margin: 0 auto; padding: 1.25rem 1rem 2rem; border-top: 2px solid var(--rule); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--ink-soft); font-size: 0.875rem; }
+footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <img src="assets/avatar-perfil.png" alt="Avatar de Tiago">
+    <div><b>Tiago Decoded</b><span>@tiago.decoded · contenido con IA, explicado fácil</span></div>
+  </header>
+
+  <section class="hero">
+    <div class="tag">CREA CONTENIDO CON IA</div>
+    <h1>Haz vídeos con IA <em>sin grabarte</em></h1>
+    <p>Guion, voz, personajes y montaje con inteligencia artificial. Te regalo lo básico para que empieces hoy.</p>
+    <div class="escena" aria-hidden="true">
+      <div>
+        <div class="bocadillo">¡ES GRATIS!</div>
+        <img class="px" src="assets/point.png" alt="" height="128">
+      </div>
+    </div>
+    <div class="botones">
+      <a class="btn prim" href="#gratis">Ver lo que te regalo</a>
+      <a class="btn sec" href="https://www.instagram.com/tiago.decoded/" target="_blank" rel="noopener">Sígueme en Instagram</a>
+    </div>
+  </section>
+
+  <h2>QUIÉN SOY</h2>
+  <div class="card quien">
+    <img src="assets/avatar-perfil.png" alt="" width="72" height="72">
+    <p>Soy <b>Santiago</b>. Hago reels animados con IA sin ponerme delante de la cámara, y aquí comparto cómo los hago para que tú también puedas crear contenido con IA.</p>
+  </div>
+
+  <h2 id="gratis">GRATIS PARA TI</h2>
+  <div class="lista">
+    <div class="card item">
+      <div><h3>Flujo básico de vídeos con IA</h3><p>Los 6 pasos que sigo, de la idea al vídeo publicado. Un PDF de una página.</p></div>
+      <a class="btn prim" href="flujo-reels-basico.pdf" download>Descargar PDF</a>
+    </div>
+    <div class="card item">
+      <div><h3>Skills básicas de vídeo</h3><p>Instrucciones listas para que la IA te ayude a escribir el guion y montar el vídeo.</p></div>
+      <span class="btn off" role="note">Muy pronto</span>
+    </div>
+  </div>
+
+  <h2>REGALO POR SEGUIRME</h2>
+  <div class="card prompt-card">
+    <span class="chip">Regalo por seguirme</span>
+    <h3>El prompt para hacer vídeos animados con IA</h3>
+    <p>Pégalo en Claude Code y te guía para crear un Reel, un Short o un TikTok animado del tema que quieras: guion, voz, animación y montaje.</p>
+    <ol class="uso">
+      <li>Abre Claude Code en una carpeta vacía de tu ordenador.</li>
+      <li>Pega el prompt y rellena las líneas de «RELLENA ESTO».</li>
+      <li>Te enseña el guion antes de animar nada: lo apruebas o le pides cambios.</li>
+    </ol>
+    <div class="caja bloq" id="caja-prompt">
+      <pre id="texto-prompt">PROMPT · VÍDEO ANIMADO CON IA (Reels, Shorts y TikTok)
+
+Quiero que seas mi director y editor de vídeo. Vamos a crear un vídeo vertical animado, sin nadie a cámara y con voz en off. Trabajamos por fases y no pasas a la siguiente sin mi OK.
+
+== RELLENA ESTO ==
+- Tema: [de qué va el vídeo y qué debe llevarse quien lo vea]
+- Duración: [entre 30 y 60 segundos]
+- Estilo visual: [por ejemplo: personajes simples, colores vivos, fondo oscuro]
+- Voz: [mi propia grabación / una voz de IA]
+- Cierre: [qué quieres que hagan al final: seguirte, comentar, compartir]
+
+== FASE 1 · GUION (me lo enseñas y esperas) ==
+- Gancho en los 2 primeros segundos: una frase que choque o una promesa clara. Nada de saludos.
+- Frases cortas y una sola idea por escena.
+- Dame el guion y una tabla de escenas: qué se dice, qué se ve y qué palabra sale en pantalla.
+
+== FASE 2 · VOZ ==
+- Si la voz es de IA, dame el texto limpio para pegarlo tal cual y espera a que te pase el audio.
+- Si grabo yo, espera mi archivo.
+
+== FASE 3 · ANIMACIÓN ==
+- Monta el vídeo en formato 1080x1920 sincronizado con la voz.
+- Una escena distinta por idea, con movimiento en cada cambio.
+- En pantalla, solo las palabras clave, nunca el texto entero.
+- Antes de exportar, enséñame una imagen de cada escena y espera mi OK.
+
+== FASE 4 · EXPORTAR ==
+- Música suave por debajo de la voz, sin taparla.
+- Exporta en MP4 y revisa que no haya cortes ni silencios largos.</pre>
+      <div class="candado">
+        <b>Sígueme en Instagram y es tuyo</b>
+        <span>Se desbloquea al momento, sin dejar ningún dato.</span>
+        <a class="btn ig" id="desbloquear" href="https://www.instagram.com/tiago.decoded/" target="_blank" rel="noopener">Seguir a @tiago.decoded</a>
+      </div>
+    </div>
+    <button class="btn sec copiar" id="copiar" type="button">Copiar prompt</button>
+    <p class="nota">Funciona mejor con un plan de pago de Claude: animar un vídeo entero consume bastante.</p>
+  </div>
+
+  <h2>EL FLUJO EN 6 PASOS</h2>
+  <ol class="pasos">
+    <li style="--c: var(--cian)"><div><b>Idea.</b> <span>Un tema de tu nicho que enganche en 2 segundos.</span></div></li>
+    <li style="--c: var(--cian)"><div><b>Guion.</b> <span>Corto, una idea por escena y un cierre que pida seguirte.</span></div></li>
+    <li style="--c: var(--amarillo)"><div><b>Voz.</b> <span>Narración con una voz de IA.</span></div></li>
+    <li style="--c: var(--naranja)"><div><b>Escenas.</b> <span>Personajes y una escena distinta por idea.</span></div></li>
+    <li style="--c: var(--naranja)"><div><b>Revisión.</b> <span>Mira cada escena antes de exportar.</span></div></li>
+    <li style="--c: var(--rojo)"><div><b>Publica.</b> <span>Música, texto en pantalla y caption.</span></div></li>
+  </ol>
+
+  <h2>EL PACK COMPLETO</h2>
+  <div class="card completo">
+    <h3>Todo lo que uso, listo para copiar</h3>
+    <ul>
+      <li>Mis skills detalladas de vídeo</li>
+      <li>Los prompts completos de cada paso</li>
+      <li>El flujo completo, con plantillas y checklist</li>
+    </ul>
+    <span class="btn off" role="note">Muy pronto</span>
+  </div>
+
+  <h2>PREGUNTAS FRECUENTES</h2>
+  <div class="faq">
+    <details><summary>¿Necesito saber programar?</summary><p>No. Le hablas a la IA en español y ella escribe el código. Tú decides el tema, apruebas el guion y revisas el resultado.</p></details>
+    <details><summary>¿Qué necesito para empezar?</summary><p>Un ordenador y Claude Code. Para la voz puedes grabarte tú o usar una voz de IA.</p></details>
+    <details><summary>¿Tengo que salir en cámara?</summary><p>No. Todo el vídeo es animado y la voz puede ser de IA. Nadie tiene que verte la cara.</p></details>
+    <details><summary>¿El regalo es gratis de verdad?</summary><p>Sí. El PDF se descarga directamente y el prompt se desbloquea al seguirme en Instagram. No pido correo ni teléfono.</p></details>
+    <details><summary>¿Sirve para TikTok y YouTube Shorts?</summary><p>Sí. El vídeo sale en vertical, el formato que usan Reels, Shorts y TikTok.</p></details>
+    <details><summary>¿Qué trae el pack completo y cuándo sale?</summary><p>Mis skills detalladas de vídeo, los prompts completos de cada paso y el flujo completo con plantillas y checklist. Sale muy pronto: sígueme en Instagram para enterarte.</p></details>
+  </div>
+
+  <h2>SÍGUEME</h2>
+  <a class="btn sec" href="https://www.instagram.com/tiago.decoded/" target="_blank" rel="noopener">Instagram · @tiago.decoded</a>
+</main>
+<footer><span>© 2026 Tiago Decoded</span><b>@tiago.decoded</b></footer>
+<script>
+(() => {
+  // shortcut: no se puede comprobar si de verdad te sigue; se desbloquea al pulsar el botón, como en la página de referencia.
+  const caja = document.getElementById("caja-prompt");
+  const abrir = () => caja.classList.remove("bloq");
+  try { if (localStorage.getItem("prompt-ok") === "1") abrir(); } catch (e) {}
+  document.getElementById("desbloquear").addEventListener("click", () => {
+    abrir();
+    try { localStorage.setItem("prompt-ok", "1"); } catch (e) {}
+  });
+  const btn = document.getElementById("copiar");
+  btn.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(document.getElementById("texto-prompt").textContent); btn.textContent = "¡Copiado!"; }
+    catch (e) { btn.textContent = "Selecciona el texto y cópialo"; }
+    setTimeout(() => (btn.textContent = "Copiar prompt"), 2000);
+  });
+})();
+</script>
+</body>
+</html>
