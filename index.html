@@ -45,11 +45,6 @@ main { max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
 img.px { image-rendering: pixelated; display: block; }
 a { color: inherit; }
 
-/* Cabecera */
-.top { display: flex; align-items: center; gap: 0.75rem; }
-.top img { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--rule); }
-.top b { display: block; font-weight: 800; }
-.top span { color: var(--ink-soft); font-size: 0.875rem; }
 
 /* Portada */
 .hero { margin-top: 2rem; text-align: center; }
@@ -70,8 +65,29 @@ h1 em { font-style: normal; color: var(--naranja); }
 .btn.off:hover { transform: none; filter: none; }
 .botones { display: grid; gap: 0.75rem; margin-top: 1.75rem; }
 
+/* Menú fijo */
+html { scroll-behavior: smooth; }
+.menu { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin: -1.5rem calc(50% - 50vw) 0; padding: 0.55rem max(1rem, calc(50vw - 284px)); border-bottom: 1px solid var(--rule); background: oklch(15% 0.02 270 / 0.9); backdrop-filter: blur(8px); }
+.perfil { flex: none; display: flex; align-items: center; gap: 0.6rem; text-decoration: none; border-radius: 99px; }
+.perfil img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--rule); }
+.perfil b { display: block; font-weight: 800; line-height: 1.15; }
+.perfil small { color: var(--ink-soft); font-size: 0.8rem; }
+.perfil:focus-visible { outline: 3px solid var(--cian); outline-offset: 3px; }
+.links { display: flex; gap: 0.3rem; overflow-x: auto; min-width: 0; scrollbar-width: none; }
+.links a { flex: none; font-family: var(--pixel); font-size: 0.72rem; text-decoration: none; padding: 0.45rem 0.5rem; border: 2px solid var(--rule); border-radius: 99px; color: var(--ink-soft); }
+.links a:hover, .links a:focus-visible { color: var(--ink); border-color: var(--naranja); outline: none; }
+@media (max-width: 560px) { .menu { gap: 0.4rem; } .perfil span { display: none; } .perfil img { width: 34px; height: 34px; } .links { gap: 0.2rem; } .links a { padding: 0.45rem 0.38rem; } }
+.sub { font-weight: 800; font-size: 1.05rem; margin: 1.75rem 0 0.75rem; }
+
+/* Bandas de sección a todo el ancho */
+.banda { position: relative; isolation: isolate; padding: 2.75rem 0; }
+.banda::before { content: ""; position: absolute; inset: 0 calc(50% - 50vw); z-index: -1; }
+.banda.alt::before { background: oklch(24% 0.035 268 / 0.6); border-block: 1px solid oklch(32% 0.03 268 / 0.6); }
+.banda > h2:first-child { margin-top: 0; }
+.banda + h2 { margin-top: 2.75rem; }
+
 /* Secciones */
-h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.125rem; letter-spacing: 0.06em; margin: 3rem 0 1rem; }
+h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.125rem; letter-spacing: 0.06em; margin: 3rem 0 1rem; scroll-margin-top: 4.5rem; }
 .card { background: var(--card); border: 2px solid var(--rule); border-radius: var(--r); padding: 1.25rem; }
 
 .quien { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: center; }
@@ -136,14 +152,14 @@ h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.125rem; letter-sp
 footer { max-width: 600px; margin: 0 auto; padding: 1.25rem 1rem 2rem; border-top: 2px solid var(--rule); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--ink-soft); font-size: 0.875rem; }
 footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
 
-@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } .btn:hover { transform: none; } }
 </style>
 </head>
 <body>
 <main>
-  <header class="top">
-    <img src="assets/avatar-perfil.png" alt="Avatar de Tiago">
-    <div><b>Tiago Decoded</b><span>@tiago.decoded · contenido con IA, explicado fácil</span></div>
+  <header class="menu">
+    <a class="perfil" href="#" aria-label="Tiago Decoded, volver arriba"><img src="assets/avatar-perfil.png" alt=""><span><b>Tiago Decoded</b><small>@tiago.decoded</small></span></a>
+    <nav class="links" aria-label="Secciones"><a href="#reels">Reels</a><a href="#aprende">Aprende</a><a href="#descarga">Gratis</a><a href="#pack">Pack</a><a href="#faq">FAQ</a></nav>
   </header>
 
   <section class="hero">
@@ -157,30 +173,55 @@ footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
       </div>
     </div>
     <div class="botones">
-      <a class="btn prim" href="#gratis">Ver lo que te regalo</a>
+      <a class="btn prim" href="#descarga">Ver lo que te regalo</a>
       <a class="btn sec" href="https://www.instagram.com/tiago.decoded/" target="_blank" rel="noopener">Sígueme en Instagram</a>
     </div>
   </section>
 
-  <h2>QUIÉN SOY</h2>
-  <div class="card quien">
-    <img src="assets/avatar-perfil.png" alt="" width="72" height="72">
-    <p>Soy <b>Santiago</b>. Hago reels animados con IA sin ponerme delante de la cámara, y aquí comparto cómo los hago para que tú también puedas crear contenido con IA.</p>
-  </div>
-
-  <h2 id="gratis">GRATIS PARA TI</h2>
+  <section class="banda alt">
+  <h2 id="reels">LO DE MIS REELS</h2>
+  <p class="intro">¿Vienes de un reel? Aquí tienes lo que prometí en cada uno.</p>
   <div class="lista">
     <div class="card item">
-      <div><span class="sello">Nuevo</span><h3>Guía: arma tus propios agentes de IA</h3><p>Qué es un agente y cómo crear tu equipo en Claude Code, paso a paso y con un ejemplo para copiar.</p></div>
+      <div><span class="sello ext">Reel · Automatiza tu Instagram</span><h3>Skills de Instagram para Claude</h3><p>13 skills gratis que escriben guiones, captions, respuestas y planes semanales. Son de la comunidad (licencia MIT), no mías.</p></div>
+      <a class="btn sec" href="https://github.com/Jakeschincariol/instagram-agent-skill" target="_blank" rel="noopener">Ver en GitHub</a>
+    </div>
+    <div class="card item">
+      <div><span class="sello">Reel · Qué es un agente de IA</span><h3>Guía: arma tus propios agentes de IA</h3><p>Qué es un agente y cómo crear tu equipo en Claude Code, paso a paso.</p></div>
       <a class="btn prim" href="agentes.html">Leer la guía</a>
     </div>
+  </div>
+
+  </section>
+
+  <section class="banda">
+  <h2 id="aprende">APRENDE</h2>
+  <div class="card item">
+    <div><span class="sello">Nuevo</span><h3>Guía: arma tus propios agentes de IA</h3><p>Qué es un agente y cómo crear tu equipo en Claude Code, paso a paso y con un ejemplo para copiar.</p></div>
+    <a class="btn prim" href="agentes.html">Leer la guía</a>
+  </div>
+  <h3 class="sub">El flujo en 6 pasos</h3>
+  <ol class="pasos">
+    <li style="--c: var(--cian)"><div><b>Idea.</b> <span>Un tema de tu nicho que enganche en 2 segundos.</span></div></li>
+    <li style="--c: var(--cian)"><div><b>Guion.</b> <span>Corto, una idea por escena y un cierre que pida seguirte.</span></div></li>
+    <li style="--c: var(--amarillo)"><div><b>Voz.</b> <span>Narración con una voz de IA.</span></div></li>
+    <li style="--c: var(--naranja)"><div><b>Escenas.</b> <span>Personajes y una escena distinta por idea.</span></div></li>
+    <li style="--c: var(--naranja)"><div><b>Revisión.</b> <span>Mira cada escena antes de exportar.</span></div></li>
+    <li style="--c: var(--rojo)"><div><b>Publica.</b> <span>Música, texto en pantalla y caption.</span></div></li>
+  </ol>
+
+  </section>
+
+  <section class="banda alt">
+  <h2 id="descarga">DESCARGA GRATIS</h2>
+  <div class="lista">
     <div class="card item">
       <div><h3>Flujo básico de vídeos con IA</h3><p>Los 6 pasos que sigo, de la idea al vídeo publicado. Un PDF de una página.</p></div>
       <a class="btn prim" href="flujo-reels-basico.pdf" download>Descargar PDF</a>
     </div>
   </div>
 
-  <h2>SKILLS GRATIS</h2>
+  <h3 class="sub">Skills gratis</h3>
   <p class="intro">Instrucciones que le enseñan a Claude Code a hacer una tarea paso a paso. Descárgalas y úsalas en tus vídeos.</p>
   <div class="lista">
     <div class="card item">
@@ -205,7 +246,7 @@ footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
     </ol>
   </div>
 
-  <h2>REGALO POR SEGUIRME</h2>
+  <h3 class="sub">Regalo por seguirme</h3>
   <div class="card prompt-card">
     <span class="chip">Regalo por seguirme</span>
     <h3>El prompt para hacer vídeos animados con IA</h3>
@@ -255,17 +296,10 @@ Quiero que seas mi director y editor de vídeo. Vamos a crear un vídeo vertical
     <p class="nota">Funciona mejor con un plan de pago de Claude: animar un vídeo entero consume bastante.</p>
   </div>
 
-  <h2>EL FLUJO EN 6 PASOS</h2>
-  <ol class="pasos">
-    <li style="--c: var(--cian)"><div><b>Idea.</b> <span>Un tema de tu nicho que enganche en 2 segundos.</span></div></li>
-    <li style="--c: var(--cian)"><div><b>Guion.</b> <span>Corto, una idea por escena y un cierre que pida seguirte.</span></div></li>
-    <li style="--c: var(--amarillo)"><div><b>Voz.</b> <span>Narración con una voz de IA.</span></div></li>
-    <li style="--c: var(--naranja)"><div><b>Escenas.</b> <span>Personajes y una escena distinta por idea.</span></div></li>
-    <li style="--c: var(--naranja)"><div><b>Revisión.</b> <span>Mira cada escena antes de exportar.</span></div></li>
-    <li style="--c: var(--rojo)"><div><b>Publica.</b> <span>Música, texto en pantalla y caption.</span></div></li>
-  </ol>
+  </section>
 
-  <h2>EL PACK COMPLETO</h2>
+  <section class="banda">
+  <h2 id="pack">EL PACK COMPLETO</h2>
   <div class="card completo">
     <h3>Todo lo que uso, listo para copiar</h3>
     <ul>
@@ -276,7 +310,10 @@ Quiero que seas mi director y editor de vídeo. Vamos a crear un vídeo vertical
     <span class="btn off" role="note">Muy pronto</span>
   </div>
 
-  <h2>PREGUNTAS FRECUENTES</h2>
+  </section>
+
+  <section class="banda alt">
+  <h2 id="faq">PREGUNTAS FRECUENTES</h2>
   <div class="faq">
     <details><summary>¿Necesito saber programar?</summary><p>No. Le hablas a la IA en español y ella escribe el código. Tú decides el tema, apruebas el guion y revisas el resultado.</p></details>
     <details><summary>¿Qué necesito para empezar?</summary><p>Un ordenador y Claude Code. Para la voz puedes grabarte tú o usar una voz de IA.</p></details>
@@ -284,6 +321,14 @@ Quiero que seas mi director y editor de vídeo. Vamos a crear un vídeo vertical
     <details><summary>¿El regalo es gratis de verdad?</summary><p>Sí. El PDF se descarga directamente y el prompt se desbloquea al seguirme en Instagram. No pido correo ni teléfono.</p></details>
     <details><summary>¿Sirve para TikTok y YouTube Shorts?</summary><p>Sí. El vídeo sale en vertical, el formato que usan Reels, Shorts y TikTok.</p></details>
     <details><summary>¿Qué trae el pack completo y cuándo sale?</summary><p>Mis skills detalladas de vídeo, los prompts completos de cada paso y el flujo completo con plantillas y checklist. Sale muy pronto: sígueme en Instagram para enterarte.</p></details>
+  </div>
+
+  </section>
+
+  <h2>QUIÉN SOY</h2>
+  <div class="card quien">
+    <img src="assets/avatar-perfil.png" alt="" width="72" height="72">
+    <p>¡Hola! Soy <b>Santiago</b> 👋 En mis reels te explico cómo funciona la IA de forma sencilla, te enseño herramientas que de verdad te sirven en el día a día y te paso consejos y novedades de tecnología. Y todo lo que uso, te lo dejo aquí para que lo pruebes tú también.</p>
   </div>
 
   <h2>SÍGUEME</h2>
