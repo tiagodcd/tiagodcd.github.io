@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arma tus agentes · Tiago Decoded</title>
+<meta name="description" content="Guía gratis para crear tus propios agentes de IA en Claude Code, paso a paso y sin programar.">
+<meta property="og:title" content="Arma tus propios agentes de IA">
+<meta property="og:description" content="Guía gratis: qué es un agente y cómo crear tu equipo en Claude Code.">
+<meta property="og:image" content="assets/avatar-perfil.png">
+<link rel="icon" href="assets/avatar-perfil.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+/* Guía de agentes. Mismos tokens que index.html. */
+:root {
+  --paper: oklch(17% 0.02 270);
+  --card: oklch(13% 0.02 270);
+  --ink: oklch(96% 0.01 85);
+  --ink-soft: oklch(70% 0.03 270);
+  --rule: oklch(30% 0.03 268);
+  --naranja: oklch(73% 0.17 45);
+  --amarillo: oklch(88% 0.17 95);
+  --cian: oklch(89% 0.13 200);
+  --rojo: oklch(66% 0.22 20);
+  --pixel: "Silkscreen", ui-monospace, monospace;
+  --body: "Outfit", system-ui, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--paper); }
+body {
+  background:
+    radial-gradient(60% 40% at 0% 0%, oklch(45% 0.16 300 / 0.45), transparent 70%),
+    radial-gradient(55% 35% at 100% 8%, oklch(60% 0.17 45 / 0.35), transparent 70%),
+    radial-gradient(60% 40% at 100% 100%, oklch(45% 0.16 300 / 0.35), transparent 70%),
+    var(--paper);
+  color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.6;
+  min-height: 100vh; overflow-x: clip;
+}
+main { max-width: 640px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+a { color: var(--cian); }
+.volver { color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; }
+.volver:hover { color: var(--ink); }
+.tag { font-family: var(--pixel); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--naranja); margin-top: 2rem; }
+h1 { font-weight: 900; font-size: clamp(2rem, 7.5vw, 2.8rem); line-height: 1.08; margin-top: 0.5rem; }
+h1 em { font-style: normal; color: var(--naranja); }
+.lead { color: var(--ink-soft); margin-top: 0.75rem; }
+h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.35rem; letter-spacing: 0.06em; margin: 2.75rem 0 0.9rem; }
+h3 { font-weight: 800; font-size: 1.2rem; line-height: 1.3; }
+p + p { margin-top: 0.75rem; }
+.soft { color: var(--ink-soft); }
+.card { background: var(--card); border: 2px solid var(--rule); border-radius: 16px; padding: 1.15rem 1.25rem; }
+.card + .card { margin-top: 0.75rem; }
+.card p { color: var(--ink-soft); margin-top: 0.3rem; }
+
+.vs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.vs .card + .card { margin-top: 0; }
+.vs .agente { border-color: var(--naranja); }
+.vs .agente h3 { color: var(--naranja); }
+@media (max-width: 460px) { .vs { grid-template-columns: minmax(0, 1fr); } }
+
+.piezas { display: grid; gap: 0.75rem; }
+.piezas .card { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 0.75rem; align-items: start; }
+.piezas .card + .card { margin-top: 0; }
+.num { font-family: var(--pixel); font-size: 1.6rem; line-height: 1; color: var(--c); }
+
+.pasos { list-style: none; padding: 0; display: grid; gap: 0.75rem; counter-reset: paso; }
+.pasos > li { background: var(--card); border: 2px solid var(--rule); border-radius: 16px; padding: 1.15rem 1.25rem; }
+.pasos > li h3::before { counter-increment: paso; content: "Paso " counter(paso) " · "; color: var(--amarillo); }
+.pasos > li p, .pasos > li ul { color: var(--ink-soft); margin-top: 0.4rem; }
+.pasos ul { padding-left: 1.2rem; display: grid; gap: 0.2rem; }
+code { font-family: var(--mono); color: var(--cian); font-size: 0.9em; overflow-wrap: anywhere; }
+
+.caja { margin-top: 0.75rem; border: 2px solid var(--rule); border-radius: 12px; background: oklch(10% 0.02 270); overflow: hidden; }
+.caja .barra { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; padding: 0.45rem 0.75rem; border-bottom: 2px solid var(--rule); font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); }
+.caja pre { font-family: var(--mono); font-size: 0.8rem; line-height: 1.55; padding: 0.9rem 1rem; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); }
+.copiar { font: inherit; font-family: var(--body); font-weight: 700; font-size: 0.8rem; color: var(--paper); background: var(--amarillo); border: 0; border-radius: 8px; padding: 0.3rem 0.7rem; cursor: pointer; }
+.copiar:focus-visible, .btn:focus-visible { outline: 3px solid var(--cian); outline-offset: 3px; }
+
+.equipo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin-top: 0.75rem; }
+.equipo div { background: oklch(20% 0.03 268); border-radius: 10px; padding: 0.7rem 0.8rem; font-size: 0.92rem; color: var(--ink-soft); }
+.equipo b { display: block; color: var(--ink); }
+@media (max-width: 460px) { .equipo { grid-template-columns: minmax(0, 1fr); } }
+
+.consejos { padding-left: 1.2rem; display: grid; gap: 0.5rem; color: var(--ink-soft); }
+.consejos li::marker { color: var(--naranja); }
+.consejos b { color: var(--ink); }
+
+.btn { display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 0.9rem 1.25rem; border-radius: 12px; font-weight: 800; text-decoration: none; text-align: center; transition: transform 0.15s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn.prim { background: var(--amarillo); color: var(--paper); }
+.btn.sec { background: var(--card); border: 2px solid var(--rule); color: var(--ink); }
+.botones { display: grid; gap: 0.75rem; margin-top: 1rem; }
+
+footer { max-width: 640px; margin: 0 auto; padding: 1.25rem 1rem 2rem; border-top: 2px solid var(--rule); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--ink-soft); font-size: 0.875rem; }
+footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+</style>
+</head>
+<body>
+<main>
+  <a class="volver" href="./">← Volver a Tiago Decoded</a>
+
+  <div class="tag">GUÍA GRATIS</div>
+  <h1>Arma tus propios <em>agentes de IA</em></h1>
+  <p class="lead">Qué es un agente, en qué se diferencia de un chatbot y cómo crear tu propio equipo de agentes en Claude Code, paso a paso y sin programar.</p>
+
+  <h2>CHATBOT VS AGENTE</h2>
+  <div class="vs">
+    <div class="card"><h3>Chatbot</h3><p>Te contesta. Le pides una web y te da las instrucciones para hacerla tú.</p></div>
+    <div class="card agente"><h3>Agente</h3><p>Lo hace. Le pides una web, escribe el código, la prueba, arregla los errores y te la entrega.</p></div>
+  </div>
+
+  <h2>LAS 3 PIEZAS DE UN AGENTE</h2>
+  <div class="piezas">
+    <div class="card"><span class="num" style="--c: var(--cian)">1</span><div><h3>Un cerebro</h3><p>El modelo de IA (por ejemplo, Claude) con instrucciones que le dicen cuál es su trabajo.</p></div></div>
+    <div class="card"><span class="num" style="--c: var(--amarillo)">2</span><div><h3>Herramientas</h3><p>Cosas que puede usar para actuar: leer y escribir archivos, ejecutar comandos o buscar en la web.</p></div></div>
+    <div class="card"><span class="num" style="--c: var(--naranja)">3</span><div><h3>Un bucle</h3><p>Piensa, actúa, mira el resultado y repite hasta terminar la tarea, sin que lo guíes paso a paso.</p></div></div>
+  </div>
+  <p class="soft" style="margin-top:0.9rem">¿Y las <b style="color:var(--ink)">skills</b>? Son manuales: le enseñan a hacer una tarea concreta mejor (escribir un guion, montar un vídeo). Ayudan mucho, pero lo que lo convierte en agente son las herramientas y el bucle.</p>
+
+  <h2>CREA TU PRIMER AGENTE</h2>
+  <ol class="pasos">
+    <li>
+      <h3>Instala Claude Code</h3>
+      <p>Es el asistente de Anthropic que trabaja en tu ordenador. Tienes las instrucciones en <a href="https://docs.claude.com/en/docs/claude-code/overview" target="_blank" rel="noopener">la documentación oficial</a>. Necesitas una cuenta de Claude.</p>
+    </li>
+    <li>
+      <h3>Decide qué hará tu agente</h3>
+      <p>Un agente funciona mejor con <b style="color:var(--ink)">un solo trabajo</b> claro. Ejemplos: escribir guiones, revisar textos, diseñar páginas, investigar un tema.</p>
+    </li>
+    <li>
+      <h3>Créalo con el comando /agents</h3>
+      <p>Abre Claude Code, escribe <code>/agents</code> y elige crear uno nuevo. Puedes pedirle a Claude que lo genere a partir de una descripción, o escribirlo tú. Se guarda como un archivo de texto:</p>
+      <ul>
+        <li><code>~/.claude/agents/</code> → disponible en todos tus proyectos.</li>
+        <li><code>.claude/agents/</code> dentro de un proyecto → solo para ese proyecto.</li>
+      </ul>
+    </li>
+    <li>
+      <h3>Escribe sus instrucciones</h3>
+      <p>El archivo tiene una cabecera (nombre, cuándo usarlo y qué herramientas puede tocar) y, debajo, sus instrucciones en lenguaje normal. Copia este ejemplo y adáptalo:</p>
+      <div class="caja">
+        <div class="barra"><span>guionista.md</span><button class="copiar" type="button" data-copiar="ej-agente">Copiar</button></div>
+        <pre id="ej-agente">---
+name: guionista
+description: Escribe guiones de vídeos cortos (30-60 s). Úsalo cuando pida un guion, un gancho o el texto de una voz en off.
+tools: Read, Write, WebSearch
+---
+
+Eres guionista de vídeos cortos para Instagram y TikTok.
+
+Cómo trabajas:
+1. Antes de escribir, pregunta el tema y a quién va dirigido si no te lo han dicho.
+2. Propón 3 ganchos para los 2 primeros segundos y espera a que elija uno.
+3. Escribe el guion: frases cortas, una idea por escena, 35-55 s.
+4. Añade una tabla de escenas: qué se dice, qué se ve y qué palabra sale en pantalla.
+5. Termina con una llamada a la acción clara.
+
+Reglas:
+- Nada de saludos al empezar.
+- Si das un dato, que sea verdadero; si no estás seguro, dilo.
+- Guarda el guion en un archivo guion.md.</pre>
+      </div>
+      <p>Si quitas la línea <code>tools</code>, el agente puede usar todas las herramientas. Limitarlas lo hace más seguro y más centrado.</p>
+    </li>
+    <li>
+      <h3>Dale sus skills (opcional)</h3>
+      <p>Guarda las skills en <code>~/.claude/skills/</code> y nómbralas en las instrucciones del agente, por ejemplo: «Para los ganchos, usa la skill ganchos». Así cada agente usa los manuales de su especialidad. Tienes dos gratis en <a href="./#gratis">mi página</a>.</p>
+    </li>
+    <li>
+      <h3>Úsalo</h3>
+      <p>Pídeselo con naturalidad: «Usa el agente guionista para escribir un reel sobre…». Claude también lo llamará solo cuando la tarea encaje con su descripción, así que escribe esa línea con cuidado.</p>
+    </li>
+  </ol>
+
+  <h2>ARMA UN EQUIPO</h2>
+  <div class="card">
+    <h3>Varios agentes, cada uno con su trabajo</h3>
+    <p>Eso es un sistema multiagente: Claude reparte la tarea y cada especialista hace su parte. Un ejemplo de equipo para crear contenido:</p>
+    <div class="equipo">
+      <div><b>Ideas y guion</b>Propone temas y escribe el texto.</div>
+      <div><b>Diseño</b>Crea portadas, páginas y presentaciones.</div>
+      <div><b>Vídeo</b>Monta, anima y exporta.</div>
+      <div><b>Revisión</b>Comprueba datos, errores y calidad.</div>
+    </div>
+    <p style="margin-top:0.75rem">Empieza con uno o dos y añade más cuando veas que una tarea se repite.</p>
+  </div>
+
+  <h2>CONSEJOS</h2>
+  <ul class="consejos">
+    <li><b>Un agente, un trabajo.</b> Si hace de todo, lo hará peor.</li>
+    <li><b>La descripción importa.</b> Es lo que lee Claude para decidir cuándo llamarlo.</li>
+    <li><b>Pide que te enseñe antes de terminar.</b> Por ejemplo: «enséñame el guion y espera mi OK».</li>
+    <li><b>Revisa siempre lo importante.</b> Un agente trabaja solo, pero tú decides qué se publica.</li>
+    <li><b>Ojo con el consumo.</b> Los agentes gastan más uso que un chat normal; con un plan de pago de Claude se trabaja mejor.</li>
+  </ul>
+
+  <h2>¿TE SIRVIÓ?</h2>
+  <p class="soft">Cada semana explico una cosa de tech e IA en un reel corto.</p>
+  <div class="botones">
+    <a class="btn prim" href="https://www.instagram.com/tiago.decoded/" target="_blank" rel="noopener">Sígueme en Instagram</a>
+    <a class="btn sec" href="./#gratis">Ver más regalos gratis</a>
+  </div>
+</main>
+<footer><span>© 2026 Tiago Decoded</span><b>@tiago.decoded</b></footer>
+<script>
+document.querySelectorAll("[data-copiar]").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(document.getElementById(btn.dataset.copiar).textContent); btn.textContent = "¡Copiado!"; }
+    catch (e) { btn.textContent = "Selecciónalo y cópialo"; }
+    setTimeout(() => (btn.textContent = "Copiar"), 2000);
+  });
+});
+</script>
+</body>
+</html>
