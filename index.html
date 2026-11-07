@@ -136,7 +136,15 @@ h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.125rem; letter-sp
 .candado span { color: var(--ink-soft); font-size: 0.9rem; max-width: 30ch; }
 .btn.ig { background: linear-gradient(90deg, #7a2fb0, #b52f7c, #c8235f); color: #fff; border: 0; cursor: pointer; font-family: inherit; }
 .copiar { margin-top: 0.75rem; width: 100%; cursor: pointer; font-family: inherit; }
-.caja.bloq ~ .copiar { display: none; }
+.caja.bloq .copiar { display: none; }
+.mini-guia { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; margin: 1rem 0; }
+.mini-guia img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule); display: block; }
+.regalo { padding: 1rem; display: grid; gap: 0.75rem; min-height: 300px; align-content: start; }
+.caja.bloq .regalo { filter: blur(5px); user-select: none; pointer-events: none; }
+.regalo .btn { justify-self: stretch; text-align: center; }
+.atajo summary { cursor: pointer; font-weight: 700; color: var(--ink); padding: 0.4rem 0; }
+.atajo pre { margin-top: 0.5rem; border: 1px solid var(--rule); border-radius: 10px; }
+.caja.bloq .atajo pre { filter: none; }
 .nota { color: var(--ink-soft); font-size: 0.8rem; margin-top: 0.75rem; }
 
 /* Preguntas frecuentes */
@@ -159,13 +167,13 @@ footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
 <main>
   <header class="menu">
     <a class="perfil" href="#" aria-label="Tiago Decoded, volver arriba"><img src="assets/avatar-perfil.png" alt=""><span><b>Tiago Decoded</b><small>@tiago.decoded</small></span></a>
-    <nav class="links" aria-label="Secciones"><a href="#reels">Reels</a><a href="#aprende">Aprende</a><a href="#descarga">Gratis</a><a href="#pack">Pack</a><a href="#faq">FAQ</a></nav>
+    <nav class="links" aria-label="Secciones"><a href="#reels">Reels</a><a href="#aprende">Aprende</a><a href="#descarga">Gratis</a><a href="#faq">FAQ</a></nav>
   </header>
 
   <section class="hero">
     <div class="tag">CREA CONTENIDO CON IA</div>
     <h1>Haz vídeos con IA <em>sin grabarte</em></h1>
-    <p>Guion, voz, personajes y montaje con inteligencia artificial. Te regalo lo básico para que empieces hoy.</p>
+    <p>Guion, voz, personajes y montaje con inteligencia artificial. Te regalo todo el proceso para que empieces hoy.</p>
     <div class="escena" aria-hidden="true">
       <div>
         <div class="bocadillo">¡ES GRATIS!</div>
@@ -196,11 +204,7 @@ footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
 
   <section class="banda">
   <h2 id="aprende">APRENDE</h2>
-  <div class="card item">
-    <div><span class="sello">Nuevo</span><h3>Guía: arma tus propios agentes de IA</h3><p>Qué es un agente y cómo crear tu equipo en Claude Code, paso a paso y con un ejemplo para copiar.</p></div>
-    <a class="btn prim" href="agentes.html">Leer la guía</a>
-  </div>
-  <h3 class="sub">El flujo en 6 pasos</h3>
+  <h3 class="sub" style="margin-top:0">El flujo en 6 pasos</h3>
   <ol class="pasos">
     <li style="--c: var(--cian)"><div><b>Idea.</b> <span>Un tema de tu nicho que enganche en 2 segundos.</span></div></li>
     <li style="--c: var(--cian)"><div><b>Guion.</b> <span>Corto, una idea por escena y un cierre que pida seguirte.</span></div></li>
@@ -249,68 +253,58 @@ footer b { font-family: var(--pixel); font-weight: 400; color: var(--ink); }
   <h3 class="sub">Regalo por seguirme</h3>
   <div class="card prompt-card">
     <span class="chip">Regalo por seguirme</span>
-    <h3>El prompt para hacer vídeos animados con IA</h3>
-    <p>Pégalo en Claude Code y te guía para crear un Reel, un Short o un TikTok animado del tema que quieras: guion, voz, animación y montaje.</p>
-    <ol class="uso">
-      <li>Abre Claude Code en una carpeta vacía de tu ordenador.</li>
-      <li>Pega el prompt y rellena las líneas de «RELLENA ESTO».</li>
-      <li>Te enseña el guion antes de animar nada: lo apruebas o le pides cambios.</li>
-    </ol>
+    <h3>Guía: así hice mi reel animado con Claude</h3>
+    <p>El making-of de mi reel de MCP en 13 páginas: instalar Remotion, la idea, el mundo, el guion, la voz y el montaje, con los prompts listos para copiar.</p>
+    <div class="mini-guia">
+      <img src="assets/guia/pag-portada.jpg" alt="Portada de la guía" width="389" height="691" loading="lazy">
+      <img src="assets/guia/pag-instalar.jpg" alt="Página: instala Remotion en Claude" width="389" height="691" loading="lazy">
+      <img src="assets/guia/pag-guion.jpg" alt="Página: cada frase, un dibujo" width="389" height="691" loading="lazy">
+    </div>
     <div class="caja bloq" id="caja-prompt">
-      <pre id="texto-prompt">PROMPT · VÍDEO ANIMADO CON IA (Reels, Shorts y TikTok)
+      <div class="regalo">
+        <a class="btn prim" href="guia-reels-animados.pdf" download>Descargar guía (PDF, 13 páginas)</a>
+        <details class="atajo">
+          <summary>¿Prefieres empezar ya? Copia el prompt rápido</summary>
+          <pre id="texto-prompt">PROMPT RÁPIDO · REEL ANIMADO CON CLAUDE Y REMOTION
 
-Quiero que seas mi director y editor de vídeo. Vamos a crear un vídeo vertical animado, sin nadie a cámara y con voz en off. Trabajamos por fases y no pasas a la siguiente sin mi OK.
+Usa la skill de Remotion. Sé mi director y montador: vamos a crear un reel vertical animado en pixel art, sin nadie a cámara. Trabajamos por fases y no pasas a la siguiente sin mi OK.
 
 == RELLENA ESTO ==
-- Tema: [de qué va el vídeo y qué debe llevarse quien lo vea]
-- Duración: [entre 30 y 60 segundos]
-- Estilo visual: [por ejemplo: personajes simples, colores vivos, fondo oscuro]
-- Voz: [mi propia grabación / una voz de IA]
-- Cierre: [qué quieres que hagan al final: seguirte, comentar, compartir]
+- Tema: [de qué va y qué se lleva quien lo vea]
+- Mundo: [una temática: RPG, ciudad, espacio…]
+- Personaje: [forma, colores, ropa]
+- Voz: [mi propia grabación / ElevenLabs]
+- Cierre: [sígueme / comenta / mini tutorial]
 
-== FASE 1 · GUION (me lo enseñas y esperas) ==
-- Gancho en los 2 primeros segundos: una frase que choque o una promesa clara. Nada de saludos.
-- Frases cortas y una sola idea por escena.
-- Dame el guion y una tabla de escenas: qué se dice, qué se ve y qué palabra sale en pantalla.
+== FASE 1 · GUION ==
+- Gancho en 2 segundos. 4 partes: gancho, qué es, ejemplos y cierre.
+- Cada frase tiene que poder dibujarse y es una acción del personaje.
+- Pártelo en trozos para grabar un audio por trozo (audio-1, audio-2…).
 
 == FASE 2 · VOZ ==
-- Si la voz es de IA, dame el texto limpio para pegarlo tal cual y espera a que te pase el audio.
-- Si grabo yo, espera mi archivo.
+- Espera mis audios. Quita pausas largas y acelera la voz a 1.1.
 
-== FASE 3 · ANIMACIÓN ==
-- Monta el vídeo en formato 1080x1920 sincronizado con la voz.
-- Una escena distinta por idea, con movimiento en cada cambio.
-- En pantalla, solo las palabras clave, nunca el texto entero.
-- Antes de exportar, enséñame una imagen de cada escena y espera mi OK.
+== FASE 3 · PLAN ==
+- Tabla por escena con los segundos: qué hace el personaje, si la cámara sigue o corta, zoom y texto. Espera mi OK.
 
-== FASE 4 · EXPORTAR ==
-- Música suave por debajo de la voz, sin taparla.
-- Exporta en MP4 y revisa que no haya cortes ni silencios largos.</pre>
+== FASE 4 · MONTAJE ==
+- 1080x1920. Un lugar distinto por escena, personajes siempre en el suelo, mismo tamaño de píxel en todo.
+- Título de 3 líneas en el primer segundo y subtítulos de 1-3 palabras con la clave en color. Nada importante abajo del todo.
+- Enséñame un fotograma por escena antes del render. Luego MP4 a -14 LUFS.</pre>
+          <button class="btn sec copiar" id="copiar" type="button">Copiar prompt</button>
+        </details>
+      </div>
       <div class="candado">
         <b>Sígueme en Instagram y es tuyo</b>
         <span>Se desbloquea al momento, sin dejar ningún dato.</span>
         <a class="btn ig" id="desbloquear" href="https://www.instagram.com/tiago.decoded/" target="_blank" rel="noopener">Seguir a @tiago.decoded</a>
       </div>
     </div>
-    <button class="btn sec copiar" id="copiar" type="button">Copiar prompt</button>
-    <p class="nota">Funciona mejor con un plan de pago de Claude: animar un vídeo entero consume bastante.</p>
+    <p class="nota">Necesitas un plan de pago de Claude. Remotion y tu propia voz son gratis.</p>
   </div>
 
   </section>
 
-  <section class="banda">
-  <h2 id="pack">EL PACK COMPLETO</h2>
-  <div class="card completo">
-    <h3>Todo lo que uso, listo para copiar</h3>
-    <ul>
-      <li>Mis skills detalladas de vídeo</li>
-      <li>Los prompts completos de cada paso</li>
-      <li>El flujo completo, con plantillas y checklist</li>
-    </ul>
-    <span class="btn off" role="note">Muy pronto</span>
-  </div>
-
-  </section>
 
   <section class="banda alt">
   <h2 id="faq">PREGUNTAS FRECUENTES</h2>
@@ -318,9 +312,8 @@ Quiero que seas mi director y editor de vídeo. Vamos a crear un vídeo vertical
     <details><summary>¿Necesito saber programar?</summary><p>No. Le hablas a la IA en español y ella escribe el código. Tú decides el tema, apruebas el guion y revisas el resultado.</p></details>
     <details><summary>¿Qué necesito para empezar?</summary><p>Un ordenador y Claude Code. Para la voz puedes grabarte tú o usar una voz de IA.</p></details>
     <details><summary>¿Tengo que salir en cámara?</summary><p>No. Todo el vídeo es animado y la voz puede ser de IA. Nadie tiene que verte la cara.</p></details>
-    <details><summary>¿El regalo es gratis de verdad?</summary><p>Sí. El PDF se descarga directamente y el prompt se desbloquea al seguirme en Instagram. No pido correo ni teléfono.</p></details>
+    <details><summary>¿El regalo es gratis de verdad?</summary><p>Sí, todo. La guía completa y el prompt se desbloquean al seguirme en Instagram, sin pedirte correo ni teléfono.</p></details>
     <details><summary>¿Sirve para TikTok y YouTube Shorts?</summary><p>Sí. El vídeo sale en vertical, el formato que usan Reels, Shorts y TikTok.</p></details>
-    <details><summary>¿Qué trae el pack completo y cuándo sale?</summary><p>Mis skills detalladas de vídeo, los prompts completos de cada paso y el flujo completo con plantillas y checklist. Sale muy pronto: sígueme en Instagram para enterarte.</p></details>
   </div>
 
   </section>
