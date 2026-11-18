@@ -36,7 +36,10 @@ main { max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 3rem; position: re
 img.px { image-rendering: pixelated; display: block; }
 a { color: inherit; }
 
-/* === FONDO ANIMADO (como Zumo Agents): estrellas pixel, fugaces, brasas y brillo cálido === */
+/* === FONDO (como Zumo Agents) ESTÁTICO: estrellas pixel y brillo cálido, sin animación para que la página vaya fluida === */
+#cielo { background: radial-gradient(70vmax 50vmax at 100% 105%, rgba(217,119,87,.20), transparent 70%), radial-gradient(60vmax 45vmax at 0% 0%, rgba(95,135,135,.12), transparent 70%), var(--paper) !important; }
+#cielo .brillo, #cielo .fugaz, #cielo .brasa { display: none; }
+#cielo .est.tw { animation: none !important; }
 #cielo { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: var(--paper); }
 #cielo .brillo { position: absolute; border-radius: 50%; filter: blur(40px); }
 #cielo .b1 { width: 70vmax; height: 50vmax; right: -20vmax; bottom: -22vmax; background: radial-gradient(closest-side, rgba(217,119,87,.22), transparent); animation: deriva1 18s ease-in-out infinite alternate; }
@@ -96,10 +99,17 @@ h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.45rem; letter-spa
 .sello { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--paper); background: var(--naranja); padding: 0.1rem 0.55rem; border-radius: 99px; margin-bottom: 0.4rem; }
 .sello.ext { background: var(--cian); }
 
-/* === PACK === */
+/* === PACK (más ancho que el resto en escritorio) === */
+#pack { margin-inline: calc(50% - min(50vw, 520px) + 1rem); }
+#pack .intro { max-width: 46ch; }
 .pack { border-color: oklch(70% 0.14 40 / 0.65); padding: 0; overflow: hidden; }
-.pack img { width: 100%; height: auto; display: block; aspect-ratio: 1; object-fit: cover; }
-.pack .cuerpo { padding: 1.25rem; display: grid; gap: 0.9rem; }
+.reels4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem; padding: 0.9rem; background: oklch(10% 0.01 300 / 0.6); }
+.reels4 figure { margin: 0; position: relative; }
+.reels4 video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block; border-radius: 12px; border: 2px solid var(--rule); background: #000; }
+.reels4 figcaption { position: absolute; left: 0.4rem; bottom: 0.4rem; font-size: 0.72rem; font-weight: 800; background: oklch(12% 0.01 300 / 0.85); padding: 0.2rem 0.5rem; border-radius: 99px; }
+@media (max-width: 640px) { .reels4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pack .cuerpo { padding: 1.4rem; display: grid; gap: 1rem; }
+@media (min-width: 900px) { .pack .cuerpo { grid-template-columns: 1.2fr 1fr; align-items: start; column-gap: 2rem; } .pack .cuerpo h3 { grid-column: 1 / -1; font-size: 1.9rem; } .pack .compra { display: grid; gap: 0.9rem; } }
 .pack h3 { font-weight: 900; font-size: 1.5rem; line-height: 1.12; }
 .pack h3 em { font-style: normal; color: var(--naranja); }
 .incluye { list-style: none; padding: 0; display: grid; gap: 0.55rem; }
@@ -108,7 +118,9 @@ h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.45rem; letter-spa
 .incluye b { color: var(--ink); }
 .precio { display: flex; align-items: baseline; gap: 0.6rem; }
 .precio b { font-size: 2rem; font-weight: 900; white-space: nowrap; }
-.precio span { color: var(--ink-soft); font-size: 0.9rem; }
+.precio { flex-wrap: wrap; }
+.precio s { color: var(--ink-soft); font-size: 1.15rem; font-weight: 700; }
+.precio em { font-style: normal; font-size: 0.78rem; font-weight: 800; color: #1a0f0b; background: var(--amarillo); padding: 0.2rem 0.55rem; border-radius: 99px; align-self: center; }
 .pack .nota { color: var(--ink-soft); font-size: 0.8rem; }
 
 /* === GRATIS: guía por seguirme === */
@@ -116,6 +128,9 @@ h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.45rem; letter-spa
 .chip { display: inline-block; font-size: 0.8rem; font-weight: 600; color: oklch(80% 0.12 350); background: oklch(40% 0.15 350 / 0.35); border: 1px solid oklch(60% 0.18 350 / 0.5); padding: 0.2rem 0.65rem; border-radius: 99px; }
 .regalo-card h3 { font-weight: 900; font-size: 1.4rem; line-height: 1.12; margin-top: 0.75rem; }
 .regalo-card > p { color: var(--ink-soft); margin-top: 0.5rem; }
+.regalo-card > p b { color: var(--ink); }
+.regalo-card .diferencia { font-size: 0.92rem; border-left: 3px solid var(--naranja); padding-left: 0.75rem; }
+.regalo-card .diferencia a { color: var(--naranja); font-weight: 800; }
 .mini-guia { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; margin: 1rem 0; }
 .mini-guia img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule); display: block; }
 .caja { position: relative; border: 2px solid var(--rule); border-radius: 12px; overflow: hidden; background: oklch(10% 0.01 300 / 0.9); }
@@ -168,7 +183,7 @@ footer small { flex-basis: 100%; }
     <p>Guion, voz, personajes y montaje con inteligencia artificial. Y un equipo de agentes de Claude que trabaja por ti.</p>
     <div class="escena" aria-hidden="true"><img class="px" src="assets/point.png" alt="" height="120"></div>
     <div class="botones">
-      <a class="btn nar" href="#pack">Ver el pack · 20 US$</a>
+      <a class="btn nar" href="#pack">Ver el pack · <s style="margin-right:.3rem;font-weight:600">25</s>20 US$</a>
       <a class="btn sec" href="#gratis">Empieza gratis</a>
     </div>
   </section>
@@ -176,9 +191,14 @@ footer small { flex-basis: 100%; }
   <!-- === PACK DE PAGO === -->
   <section class="bloque" id="pack">
     <h2>EL PACK</h2>
-    <p class="intro">Mi método completo, paso a paso, para gente que no programa.</p>
+    <p class="intro">Mi método completo para hacer reels como estos, paso a paso y sin programar.</p>
     <div class="card pack">
-      <img src="assets/pack-portada.jpg" alt="Portada del pack: reels animados con IA y tu equipo de agentes" width="600" height="600" loading="lazy">
+      <div class="reels4">
+        <figure><video src="assets/clips/modelos.mp4" poster="assets/clips/modelos.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Reel en pixel completo"></video><figcaption>Pixel completo</figcaption></figure>
+        <figure><video src="assets/clips/capcut.mp4" poster="assets/clips/capcut.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Reel estilo samurái"></video><figcaption>Pixel completo</figcaption></figure>
+        <figure><video src="assets/clips/3d.mp4" poster="assets/clips/3d.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Reel en 3D"></video><figcaption>3D</figcaption></figure>
+        <figure><video src="assets/clips/doble.mp4" poster="assets/clips/doble.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Reel de pantalla dividida"></video><figcaption>Pantalla dividida</figcaption></figure>
+      </div>
       <div class="cuerpo">
         <h3>Reels animados con IA y <em>tu equipo de agentes</em></h3>
         <ul class="incluye">
@@ -187,9 +207,12 @@ footer small { flex-basis: 100%; }
           <li><span><b>Mi skill "crear-reel".</b> Claude hace el reel entero por fases, del gancho al vídeo.</span></li>
           <li><span><b>Mis 8 agentes listos para instalar:</b> vídeo, marketing, diseño, prompts y más.</span></li>
         </ul>
-        <div class="precio"><b>20 US$</b><span>pago único · garantía de 7 días</span></div>
-        <a class="btn nar" id="comprar" href="https://pay.hotmart.com/A108553119N" target="_blank" rel="noopener">Comprar en Hotmart</a>
-        <p class="nota">Necesitas un ordenador con Windows o Mac y Claude de pago (plan Pro).</p>
+        <div class="compra">
+          <div class="precio"><s>25 US$</s><b>20 US$</b><em>Precio de lanzamiento</em></div>
+          <p class="nota" style="margin-top:-0.5rem">Pago único · garantía de 7 días</p>
+          <a class="btn nar" id="comprar" href="https://pay.hotmart.com/A108553119N" target="_blank" rel="noopener">Comprar en Hotmart</a>
+          <p class="nota">Necesitas un ordenador con Windows o Mac y Claude de pago (plan Pro).</p>
+        </div>
       </div>
     </div>
   </section>
@@ -197,11 +220,12 @@ footer small { flex-basis: 100%; }
   <!-- === GRATIS === -->
   <section class="bloque" id="gratis">
     <h2>GRATIS</h2>
-    <p class="intro">Para que pruebes el método antes de nada.</p>
+    <p class="intro">Para que pruebes cómo trabajo antes de nada.</p>
     <div class="card regalo-card" id="regalo">
       <span class="chip">Regalo por seguirme</span>
-      <h3>Guía: así hice mi reel animado con Claude</h3>
-      <p>Uno de mis reels, paso a paso, en 13 páginas: instalar Remotion, la idea, el mundo, el guion, la voz y el montaje, con los prompts listos para copiar.</p>
+      <h3>Guía gratis: cómo hice uno de mis reels</h3>
+      <p>Te enseño, en 13 páginas, cómo monté <b>un</b> reel concreto: instalar Remotion, la idea, el guion, la voz y el montaje, con sus prompts. Es el punto de partida para probar.</p>
+      <p class="diferencia">¿Quieres hacerlos tú, en cualquier estilo y más rápido? En <a href="#pack">el pack</a> tienes los 4 estilos, mi skill que hace el reel por ti y mis 8 agentes.</p>
       <div class="mini-guia">
         <img src="assets/guia/pag-portada.jpg" alt="Portada de la guía" width="389" height="691" loading="lazy">
         <img src="assets/guia/pag-instalar.jpg" alt="Página: instala Remotion en Claude" width="389" height="691" loading="lazy">
@@ -320,7 +344,7 @@ Usa la skill de Remotion. Sé mi director y montador: vamos a crear un reel vert
 <footer><span>© 2026 Tiago Decoded</span><b>@tiago.decoded</b><small>Producto independiente, no afiliado a Anthropic. Claude y Claude Code son marcas de Anthropic.</small></footer>
 <script>
 (() => {
-  // Fondo: estrellas pixel, estrellas fugaces y brasas (semilla fija: siempre igual)
+  // Fondo: estrellas pixel quietas (semilla fija: siempre igual)
   const cielo = document.getElementById("cielo");
   let s = 7; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
   for (let i = 0; i < 120; i++) {
@@ -329,16 +353,6 @@ Usa la skill de Remotion. Sé mi director y montador: vamos a crear un reel vert
     e.style.cssText = `left:${(r() * 100).toFixed(2)}%;top:${(r() * 100).toFixed(2)}%;width:${z}px;height:${z}px;opacity:${o.toFixed(2)};--o:${o.toFixed(2)};animation-duration:${(2.5 + r() * 4).toFixed(1)}s;animation-delay:${(r() * 4).toFixed(1)}s`;
     if (r() < .08) e.style.background = "#e78a53";
     cielo.appendChild(e);
-  }
-  [["62%", "48%", 0], ["18%", "72%", 3.2], ["80%", "86%", 6.1]].forEach(([x, y, d]) => {
-    const f = document.createElement("span"); f.className = "fugaz"; f.style.cssText = `left:${x};top:${y};animation-delay:${d}s`; cielo.appendChild(f);
-  });
-  const cols = ["#d97757", "#e78a53", "#fbcb97", "#ffb35c"];
-  for (let i = 0; i < 16; i++) {
-    const b = document.createElement("span"), z = [4, 6, 8][i % 3];
-    b.className = "brasa";
-    b.style.cssText = `left:${(r() * 100).toFixed(2)}%;width:${z}px;height:${z}px;background:${cols[i % 4]};animation-duration:${(7 + r() * 6).toFixed(1)}s;animation-delay:${(r() * 8).toFixed(1)}s`;
-    cielo.appendChild(b);
   }
 
   // shortcut: no se puede comprobar si de verdad te sigue; se desbloquea al pulsar el botón.
