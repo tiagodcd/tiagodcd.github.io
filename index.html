@@ -122,6 +122,16 @@ h2 { font-family: var(--pixel); font-weight: 400; font-size: 1.45rem; letter-spa
 .precio s { color: var(--ink-soft); font-size: 1.15rem; font-weight: 700; }
 .precio em { font-style: normal; font-size: 0.78rem; font-weight: 800; color: #1a0f0b; background: var(--amarillo); padding: 0.2rem 0.55rem; border-radius: 99px; align-self: center; }
 .pack .nota { color: var(--ink-soft); font-size: 0.8rem; }
+.agentes { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 1rem; order: 3; }
+.pack .compra { order: 2; }
+.agentes > p { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 0.8rem; }
+.agentes > p b { color: var(--ink); }
+.ag-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem; }
+.ag-grid div { display: grid; justify-items: center; text-align: center; gap: 0.15rem; padding: 0.7rem 0.3rem; border: 1px solid var(--rule); border-radius: 12px; background: oklch(10% 0.01 300 / 0.5); }
+.ag-grid img { width: 36px; height: auto; margin-bottom: 0.3rem; }
+.ag-grid b { font-size: 0.85rem; color: var(--c); }
+.ag-grid small { font-size: 0.72rem; color: var(--ink-soft); line-height: 1.2; }
+@media (min-width: 900px) { .ag-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
 
 /* === GRATIS: guía por seguirme === */
 .regalo-card { border-color: oklch(55% 0.2 340 / 0.6); }
@@ -207,6 +217,19 @@ footer small { flex-basis: 100%; }
           <li><span><b>Mi skill "crear-reel".</b> Claude hace el reel entero por fases, del gancho al vídeo.</span></li>
           <li><span><b>Mis 8 agentes listos para instalar:</b> vídeo, marketing, diseño, prompts y más.</span></li>
         </ul>
+        <div class="agentes">
+          <p><b>¿Qué es un agente?</b> Un especialista dentro de Claude. Tú pides algo y Claude se lo pasa al que sabe hacerlo.</p>
+          <div class="ag-grid">
+            <div style="--c:#fe7a7c"><img class="px" src="assets/agentes/vido.svg" alt=""><b>Vídeo</b><small>Hace tus reels</small></div>
+            <div style="--c:#fd6cb2"><img class="px" src="assets/agentes/marko.svg" alt=""><b>Marketing</b><small>Captions y ganchos</small></div>
+            <div style="--c:#bd7dfb"><img class="px" src="assets/agentes/diso.svg" alt=""><b>Diseño</b><small>Webs y carruseles</small></div>
+            <div style="--c:#40d8ef"><img class="px" src="assets/agentes/promo.svg" alt=""><b>Prompts</b><small>Para cualquier IA</small></div>
+            <div style="--c:#fdb45a"><img class="px" src="assets/agentes/doco.svg" alt=""><b>Documentos</b><small>PDF, Word, Excel</small></div>
+            <div style="--c:#7fd153"><img class="px" src="assets/agentes/bizo.svg" alt=""><b>Negocios</b><small>Precios e ideas</small></div>
+            <div style="--c:#5da4f9"><img class="px" src="assets/agentes/devo.svg" alt=""><b>Desarrollo</b><small>Webs y apps</small></div>
+            <div style="--c:#6ee0c8"><img class="px" src="assets/agentes/revo.svg" alt=""><b>Revisión</b><small>Busca errores</small></div>
+          </div>
+        </div>
         <div class="compra">
           <div class="precio"><s>25 US$</s><b>20 US$</b><em>Precio de lanzamiento</em></div>
           <p class="nota" style="margin-top:-0.5rem">Pago único · garantía de 7 días</p>
